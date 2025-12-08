@@ -2,23 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-@Autonomous(name="DriveBob")
-public class DriveBob extends LinearOpMode {
+@Autonomous(name="RedAutoCollect")
+public class RedAutoCollect extends LinearOpMode {
     DcMotor TopLeft;
     DcMotor TopRight;
     DcMotor BottomLeft;
@@ -70,7 +60,37 @@ public class DriveBob extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()) {
             double Voltage = ((ranger.getVoltage() * 48.7) - 4.9);
-            LeftOuttake.setPower(0);
+
+            RightOuttake.setPower(-1.0);
+            LeftOuttake.setPower(-1.0);
+            IntakeMotor.setPower(.75);
+            sleep(2000);
+
+            TopLeft.setPower(0.8);
+            TopRight.setPower(0.7);
+            BottomLeft.setPower(0.8);
+            BottomRight.setPower(0.7);
+            Light.setPosition(1.0);
+
+            IntakeMotor.setPower(.75);
+            sleep(2000);
+
+            TopLeft.setPower(0.8);
+            TopRight.setPower(0.7);
+            BottomLeft.setPower(0.8);
+            BottomRight.setPower(0.7);
+            Light.setPosition(1.0);
+
+            IntakeMotor.setPower(.75);
+            sleep(2000);
+
+            TopLeft.setPower(0.8);
+            TopRight.setPower(0.7);
+            BottomLeft.setPower(0.8);
+            BottomRight.setPower(0.7);
+            Light.setPosition(1.0);
+
+            /*LeftOuttake.setPower(0);
             RightOuttake.setPower(0);
             LeftOuttake.setPower(-1);
             RightOuttake.setPower(-1);
@@ -86,11 +106,11 @@ public class DriveBob extends LinearOpMode {
             Light.setPosition(1.0);
             //LeftOuttake.setPower(-1.0);
             //RightOuttake.setPower(-1.0);
-            sleep(1425); //forward
+            sleep(1425 ); //forward
 
             TopLeft.setPower(0.536);
             TopRight.setPower(-0.469);
-            sleep(620);
+            sleep(600);
 
             TopLeft.setPower(0.8);
             TopRight.setPower(0.7);
@@ -108,7 +128,7 @@ public class DriveBob extends LinearOpMode {
             BottomRight.setPower(0);
             LeftOuttake.setPower(0);
             RightOuttake.setPower(0);
-            sleep(9999999);
+            sleep(9999999);*/
 
 //            TopLeft.setPower(0.5);
 //            TopRight.setPower(-0.5);

@@ -2,23 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-@Autonomous(name="DriveBob")
-public class DriveBob extends LinearOpMode {
+@Autonomous(name="BlueC1Edge")
+public class BlueC1Edge extends LinearOpMode {
     DcMotor TopLeft;
     DcMotor TopRight;
     DcMotor BottomLeft;
@@ -86,17 +76,17 @@ public class DriveBob extends LinearOpMode {
             Light.setPosition(1.0);
             //LeftOuttake.setPower(-1.0);
             //RightOuttake.setPower(-1.0);
-            sleep(1425); //forward
+            sleep(1050); //forward
 
-            TopLeft.setPower(0.536);
-            TopRight.setPower(-0.469);
-            sleep(620);
+            TopLeft.setPower(-0.536);
+            TopRight.setPower(0.469);
+            sleep(625);
 
             TopLeft.setPower(0.8);
             TopRight.setPower(0.7);
             BottomLeft.setPower(0.8);
             BottomRight.setPower(0.7);
-            sleep(260);
+            sleep(410); //test value
 
             LeftOuttake.setPower(1.0);
             RightOuttake.setPower(1.0);
