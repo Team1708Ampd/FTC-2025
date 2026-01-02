@@ -40,8 +40,8 @@ public class DriveBob extends LinearOpMode {
         TopRight = hardwareMap.get(DcMotor.class, "rightFront");
         BottomLeft = hardwareMap.get(DcMotor.class, "leftBack");
         BottomRight = hardwareMap.get(DcMotor.class, "rightBack");
-        TopLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        BottomLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        TopRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        BottomRight.setDirection(DcMotorSimple.Direction.REVERSE);
         TopLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         TopRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BottomLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -76,16 +76,16 @@ public class DriveBob extends LinearOpMode {
             RightOuttake.setPower(-1);
             sleep(250);
 
-            LeftOuttake.setPower(-0.25);
-            RightOuttake.setPower(-0.25);
+            LeftOuttake.setPower(-0.5);
+            RightOuttake.setPower(-0.5);
 
             TopLeft.setPower(0.8);
             TopRight.setPower(0.7);
             BottomLeft.setPower(0.8);
             BottomRight.setPower(0.7);
             Light.setPosition(1.0);
-            //LeftOuttake.setPower(-1.0);
-            //RightOuttake.setPower(-1.0);
+            //lowerIntake.setPower(-1.0);
+            //leftShooter.setPower(-1.0);
             sleep(1425); //forward
 
             TopLeft.setPower(0.536);
@@ -117,7 +117,7 @@ public class DriveBob extends LinearOpMode {
 //            Light.setPosition(1.0);
 //            sleep(200);
 
-//            IntakeMotor.setPower(0.75);
+//            upperIntake.setPower(0.75);
 //            TopLeft.setPower(0.5);
 //            TopRight.setPower(0.5);
 //            BottomLeft.setPower(0.5);
