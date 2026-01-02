@@ -2,28 +2,23 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 
-    @TeleOp(name = "DriveCode")
+@TeleOp(name = "DriveCode")
     public class DriveCode extends LinearOpMode {
         DcMotor TopLeft;
         DcMotor TopRight;
         DcMotor BottomLeft;
         DcMotor BottomRight;
-        DcMotor IntakeMotor;
-        DcMotor LeftOuttake;
-        DcMotor RightOuttake;
-        DcMotor Climber;
+        DcMotor upperIntake;
+        DcMotor lowerIntake;
+        DcMotor leftShooter;
+        DcMotor rightShooter;
         AnalogInput ranger;
         Servo Light;
 
@@ -36,49 +31,69 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
             TopLeft.setDirection(DcMotorSimple.Direction.REVERSE);
             BottomLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            IntakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
-            LeftOuttake = hardwareMap.get(DcMotor.class,"leftOuttake");
-            RightOuttake = hardwareMap.get(DcMotor.class,"rightOuttake");
-            Climber = hardwareMap.get(DcMotor.class,"climber");
-            IntakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-            LeftOuttake.setDirection(DcMotorSimple.Direction.REVERSE);
-            LeftOuttake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            RightOuttake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+            upperIntake = hardwareMap.get(DcMotor.class, "upperIntake");
+            lowerIntake = hardwareMap.get(DcMotor.class,"lowerIntake");
+            leftShooter = hardwareMap.get(DcMotor.class,"leftShooter");
+            rightShooter = hardwareMap.get(DcMotor.class,"rightShooter");
+            leftShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
             ranger = hardwareMap.get(AnalogInput.class, "ranger");
             Light = hardwareMap.get(Servo.class, "RGB");
+            double Voltage = ((ranger.getVoltage() * 48.7) - 4.9);
 
             waitForStart();
             while (
                     opModeIsActive())
              {
                 if(gamepad1.a){
-                    IntakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-                    IntakeMotor.setPower(0.75);
+                    lowerIntake.setDirection(DcMotorSimple.Direction.FORWARD);
+                    lowerIntake.setPower(1);
+
 
                 }else if(gamepad1.right_bumper){
-                    IntakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-                    IntakeMotor.setPower(0.75);
+                    lowerIntake.setDirection(DcMotorSimple.Direction.REVERSE);
+                    lowerIntake.setPower(1);
                 }
-                else{IntakeMotor.setPower(0);
+                else{
+                    lowerIntake.setPower(0);
+
                 }
 
-                if(gamepad1.y){
-                    LeftOuttake.setPower(1);
-                    RightOuttake.setPower(1);
-                } else if (gamepad1.x) {
-                    LeftOuttake.setPower(-0.75);
-                    RightOuttake.setPower(-0.75);
+                if(gamepad1.y /*&& Voltage<7*/){ //"beam break" stop
+                    lowerIntake.setPower(1);
+                    upperIntake.setPower(1);
+                    Light.setPosition(0.333);
                 } else {
-                    LeftOuttake.setPower(0);
-                    RightOuttake.setPower(0);
+                    upperIntake.setPower(0);
                 }
+                 if(gamepad2.y){ //Copilot Shooter 75%
+                     leftShooter.setPower(.75);
+                     rightShooter.setPower(.75);
+                 } else {
+                     leftShooter.setPower(0);
+                     rightShooter.setPower(0);
+                 }
+                 if(gamepad2.a){ //Copilot Shooter 50%
+                     leftShooter.setPower(.5);
+                     rightShooter.setPower(.5);
+                 } else {
+                     leftShooter.setPower(0);
+                     rightShooter.setPower(0);
+                 }
 
-                 // send the info back to driver station using telemetry function.
-                 telemetry.addData("Raw Voltage",    ranger.getVoltage());
+                 if(gamepad2.right_bumper && leftShooter.getPowerFloat() && rightShooter.getPowerFloat()) {
+                     Light.setPosition(.555);
+                     upperIntake.setPower(1);
+                     lowerIntake.setPower(1);
+                 }
+
+
+                     // send the info back to driver station using telemetry function.
+                     telemetry.addData("Raw Voltage", ranger.getVoltage());
+
                  //telemetry.addData("Inch 15DEG 0-1 Mode: ", (ranger.getVoltage()*32.5)-2.6);
                  telemetry.addData("Inch 20DEG 0-0 Mode: ", (ranger.getVoltage()*48.7)-4.9);
                  //telemetry.addData("Inch 27DEG 1-0 Mode: ", (ranger.getVoltage()*78.1)-10.2);
@@ -86,18 +101,32 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
                  telemetry.update();
 
-                 double y = -gamepad1.left_stick_y;
-                 double x = gamepad1.right_stick_x * 1.1;
-                 double rx = gamepad1.left_stick_x;
+                 double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+                 double x = gamepad1.left_stick_x * 1.1; // test Counteract imperfect strafing
+                 double rx = -gamepad1.right_stick_x; //testing neg value to fix turning
 
-                 double denominator = Math.max(Math.abs(y)+Math.abs(x)+Math.abs(rx),1);
-                 double frontLeftPower = (y+x+rx)/denominator;
-                 double backLeftPower = (y-x+rx)/denominator;
-                 double frontRightPower = (y-x-rx)/denominator;
-                 double backRightPower = (y+x-rx)/denominator;
+                 double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                 double frontLeftPower = (y + x + rx) / denominator;
+                 double backLeftPower = (y - x + rx) / denominator;
+                 double frontRightPower = (y - x - rx) / denominator;
+                 double backRightPower = (y + x - rx) / denominator;
+
+                 double max = Math.abs(frontLeftPower);
+                 if (Math.abs(backLeftPower) > max) max = Math.abs(backLeftPower);
+                 if (Math.abs(frontRightPower) > max) max = Math.abs(frontRightPower);
+                 if (Math.abs(backRightPower) > max) max = Math.abs(backRightPower);
+
+                 if (max > 1.0) {
+                     frontLeftPower /= max;
+                     backLeftPower /= max;
+                     frontRightPower /= max;
+                     backRightPower /= max;
+                 }
+
+
                  TopLeft.setPower(frontLeftPower);
-                 TopRight.setPower(frontRightPower);
-                 BottomLeft.setPower(backLeftPower);
+                 TopRight.setPower(backLeftPower);
+                 BottomLeft.setPower(frontRightPower);
                  BottomRight.setPower(backRightPower);
                  Light.setPosition(0.333);
 

@@ -74,8 +74,8 @@ public class BlueC1Edge extends LinearOpMode {
             BottomLeft.setPower(0.8);
             BottomRight.setPower(0.7);
             Light.setPosition(1.0);
-            //LeftOuttake.setPower(-1.0);
-            //RightOuttake.setPower(-1.0);
+            //lowerIntake.setPower(-1.0);
+            //leftShooter.setPower(-1.0);
             sleep(1050); //forward
 
             TopLeft.setPower(-0.536);
@@ -107,7 +107,7 @@ public class BlueC1Edge extends LinearOpMode {
 //            Light.setPosition(1.0);
 //            sleep(200);
 
-//            IntakeMotor.setPower(0.75);
+//            upperIntake.setPower(0.75);
 //            TopLeft.setPower(0.5);
 //            TopRight.setPower(0.5);
 //            BottomLeft.setPower(0.5);
