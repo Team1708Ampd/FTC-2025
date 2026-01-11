@@ -90,13 +90,16 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
                 } else {
                     upperIntake.setPower(0);
                 }
-                if(gamepad2.y){ //Copilot Shooter 75%
-                    leftShooter.setPower(.75);
-                    rightShooter.setPower(.75);
+                if(gamepad2.y){ //Copilot Shooter 70% *Testing
+                    leftShooter.setPower(.7);
+                    rightShooter.setPower(.7);
+                } else if(gamepad2.a) { //Copilot Shooter 65% testing
+                    leftShooter.setPower(.65);
+                    rightShooter.setPower(.65);
                 }
-                else if(gamepad2.a){ //Copilot Shooter 50%
-                    leftShooter.setPower(.5);
-                    rightShooter.setPower(.5);
+                    else if(gamepad2.x){ //Copilot Shooter 55% testing
+                    leftShooter.setPower(.55);
+                    rightShooter.setPower(.55);
                 } else {
                     leftShooter.setPower(0);
                     rightShooter.setPower(0);
